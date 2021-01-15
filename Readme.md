@@ -15,10 +15,10 @@ http://localhost:8000/swagger-ui.html
 
 # Docker 
 ## Build image
- ```bash
- docker build --file=Dockerfile \
-      --tag=myk8sapp .
- ```
+Build image from docker file. Dot - get docker file from current directory 
+```bash
+  docker build -t spring-rest-h2-app:1.0.0 .
+```
 
 ### Optional, check new image in list 
 ```bash
@@ -29,39 +29,52 @@ http://localhost:8000/swagger-ui.html
 
 #### Build and run 
 ```bash
-	docker run -p 8001:8000 --name spring-h2-container myk8sapp
-
+   docker run -p 8001:8000 --name spring-h2-container spring-rest-h2-app:1.0.0
 ```
 
-|   Description			| Value			|
-|---				|---			|
-|port on local machine   	| 8001  		|	
-|container port    		| 8000  		|	
-|image name 			| myk8sapp  		|
-|container name 	   	| spring-h2-container   |
+|   Description			| Value			   |
+|---				|---			   |
+|port on local machine   	| 8001  		   |	
+|container port    		| 8000  		   |	
+|image name 			| spring-rest-h2-app:1.0.0 |
+|container name 	   	| spring-h2-container      |
 
 #### Just run
 ```bash
    docker start spring-h2-container
 ```
-
+------------------------------------------------------------------
 ## Dockerhub 
-
 Login 
 ```bash
 docker login 
 ```
-## Reaname image
+### Docker commit 
+docker commit [CONTAINER_NAME|CONTAINER_ID] [USER_PROFILE_NAME] 
+
+``` bash
+  docker commit spring-h2-container sevad/spring-h2-rest:v1.0.0
+```
+as a result we created image and we can push to docker hub 
 ```bash
- docker tag myk8sapp sevad/springh2k8s:latest
+  docker push  sevad/spring-h2-rest
 ```
 
-## Upload image
+### Options 
+## Renamed image for docker hub 
+
+docker tag [IMAGE_NAME] [DOCKER_HUB_PUBLIC_REPO_NAME][:version]
+
 ```bash
-    docker push sevad/springh2k8s:latest
+ docker tag sevad/spring-h2-rest sevad/springh2k8s:latest
+```
+push to exists docker repo 
+```bash
+   docker push  sevad/springh2k8s
 ```
 
-## Run. 
+
+## Run. g
 situation when image doesn't exists in local machine 
 ```bash
     docker run -it  -p 18001:8000 \
